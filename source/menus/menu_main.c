@@ -14,7 +14,9 @@
 
 #include "menu_options.h"
 
-int MMSelection = 0;
+#include "stats.h"
+
+static int MMSelection = 0;
 
 void Main_Menu_TextInit() {
 
@@ -31,9 +33,6 @@ void Main_Menu_TextExit() {
 	C2D_TextBufDelete(MainMenuTextBuf);
 }
 
-
-void Main_Menu_Options_Draw();
-
 int Main_Menu_Draw() {
 
 	arrow_offset = 0;
@@ -48,7 +47,7 @@ int Main_Menu_Draw() {
 			MMSelection--;
 		}
 
-		if (kDown & KEY_DOWN && MMSelection < 3) {
+		if (kDown & KEY_DOWN && MMSelection < ((sizeof(main_text) / sizeof(char*))-1)) { // Don't go over the qty of options
 			MMSelection++;
 		}
 
@@ -57,12 +56,15 @@ int Main_Menu_Draw() {
 				printf("\x1b[4;0HNot implemented yet, so fuck off!");
 
 			if (MMSelection == 1) 
+				Stats_Draw();
+
+			if (MMSelection == 2) 
 				DrawOptions();
 
-			if (MMSelection == 2)
+			if (MMSelection == 3)
 				printf("\x1b[6;0HLiterally just Glazed_Belmont :D");
 
-			if (MMSelection == 3)
+			if (MMSelection == 4)
 				break;
 			
 		}

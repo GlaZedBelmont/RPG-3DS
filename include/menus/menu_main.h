@@ -1,4 +1,4 @@
-
+#pragma once
 
 
 
@@ -7,6 +7,7 @@ C2D_Text MainMenuText[1];
 
 static const char main_text[] =
 	"Play\n"
+	"Stats\n"
 	"Options\n"
 	"Credits\n"
 	"Quit\n";

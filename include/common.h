@@ -1,6 +1,4 @@
-#include <3ds.h>
-#include <citro3d.h>
-#include <citro2d.h>
+#pragma once
 
 
 
@@ -8,8 +6,9 @@ C2D_TextBuf g_staticBuf, g_dynamicBuf;
 C2D_Text g_staticText[3];
 C2D_Font font[3];
 
-
 int arrow_offset;
+
+bool sound;
 
 #define TOP_SCREEN_WIDTH  400
 #define BOT_SCREEN_WIDTH 320
