@@ -12,6 +12,8 @@
 
 #include "stats.h"
 
+#include "menu_options.h"
+
 #define name 0
 #define attack 1
 #define defense 2
@@ -24,11 +26,10 @@ player glazy = {"Glazed", {10, 20, 20, 23}}; // Temp variable
 
 int Stats_Read() {
 
-    printf("\x1b[7;0H                             ");
 
     statfile = fopen("sdmc:/statfile.dat", "rb");
     if (statfile == NULL) {
-        printf("\x1b[7;0HNo statfile.dat!");
+//        if (config.debug == true) printf("\x1b[7;0HNo statfile.dat!");
         return 1;
     }
     fread(&glazy, sizeof(player), 1, statfile);
@@ -40,15 +41,13 @@ int Stats_Read() {
  
 int Stats_Write() {
 
-    printf("\x1b[7;0H                             ");
-    printf("\x1b[8;0H                             ");
 
 
     statfile = fopen("sdmc:/statfile.dat", "wb");
 
     fwrite(&glazy, sizeof(player), 1, statfile);
     fclose(statfile);
-    printf("\x1b[7;0HStats saved!");
+//    if (config.debug == true) printf("\x1b[7;0HStats saved!");
     return 0;
 }
 

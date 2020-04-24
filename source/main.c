@@ -13,6 +13,8 @@
 
 #include "menu_main.h"
 
+#include "menu_options.h"
+
 
 bool grounded = false, dead = false, pausegame = false, debug = true;
 float posY, posX, Vmomajust = 0, Vmomentum = 0, ajustpY = 0, ajustoY = 0, Hmomentum = 0, ajustpX = 0, ajustoX = 0, offsetX = 0, offsetY = 0;
@@ -273,7 +275,7 @@ int main(int argc, char **argv)
     int sizeY = 1;
 
  
-    consoleInit(GFX_BOTTOM, NULL);
+    //if (config.debug == true) consoleInit(GFX_BOTTOM, NULL);
 
 
     while (aptMainLoop())

@@ -8,8 +8,6 @@ C2D_Font font[3];
 
 int arrow_offset;
 
-bool sound;
-
 #define TOP_SCREEN_WIDTH  400
 #define BOT_SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
