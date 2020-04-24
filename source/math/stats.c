@@ -18,11 +18,11 @@
 #define magic 3
 #define speed 4
 
-static int selection = 0;
+//static int selection = 0;
 
 player glazy = {"Glazed", {10, 20, 20, 23}}; // Temp variable
 
-int StatsRead() {
+int Stats_Read() {
 
     printf("\x1b[7;0H                             ");
 
@@ -38,7 +38,7 @@ int StatsRead() {
     return 0;
 }
 
-int StatsWrite() {
+int Stats_Write() {
 
     printf("\x1b[7;0H                             ");
     printf("\x1b[8;0H                             ");
@@ -54,7 +54,7 @@ int StatsWrite() {
 
 int Stats_Draw() {
 
-	arrow_offset = 0;
+//	arrow_offset = 0;
 
     StatsTextBuf  = C2D_TextBufNew(4096);
 
@@ -62,43 +62,13 @@ int Stats_Draw() {
 
 		hidScanInput();
 		u32 kDown = hidKeysDown();
-		u32 kHeld = hidKeysHeld();
+//		u32 kHeld = hidKeysHeld();
 
         C2D_TextBufClear(StatsTextBuf);
 
         char buf[160];
-
-		if (kDown & KEY_UP && selection > 0) {
-			selection--;
-		}
-
-		if (kDown & KEY_DOWN && selection < ((sizeof(stats_text) / sizeof(char*))-1)) { // Don't go over the qty of options
-			selection++;
-		}
-
-		if (kDown & KEY_A) {
-			if (selection == name) 
-				//printf("\x1b[4;0HNot implemented yet, so fuck off!");
-
-			if (selection == attack) 
-				StatsRead();
-
-			if (selection == defense) 
-				//DrawOptions();
-
-			if (selection == magic)
-				//printf("\x1b[6;0HLiterally just Glazed_Belmont :D");
-
-			if (selection == speed)
-				break;
-			
-		}
-
-		if (kDown & KEY_B) break;
-
-		if (kHeld & KEY_LEFT) arrow_offset--;
-
-		if (kHeld & KEY_RIGHT) arrow_offset++;
+        
+        if (kDown & KEY_B) break;
 			
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_SceneBegin(top);
@@ -107,17 +77,18 @@ int Stats_Draw() {
 		C2D_DrawImageAt(battle_plains, 0, 0, 0.0f, NULL, 0.5f, 0.5f);
 		C2D_DrawRectSolid(20, 20, 0.5f, 360, 200, C2D_Color32(25, 63, 12, 200));
 
-        //snprintf(buf, 64, stats_text, glazy); 
-        snprintf(buf, sizeof(buf), stats_text);
+
+        snprintf(buf, sizeof(buf), stats_text, glazy.Char_name, \
+        glazy.stat.atk, glazy.stat.def, glazy.stat.mag, glazy.stat.spe);
         
         C2D_TextParse(&StatsText, StatsTextBuf, buf);
         C2D_TextOptimize(&StatsText);
 
         
 
-		C2D_DrawText(&StatsText, 0, 60.0f, 30.0f, 0.5f, 0.75f, 0.75f);
+		C2D_DrawText(&StatsText, 0, 60.0f, 30.0f, 0.5f, 0.5f, 0.5f);
 
-		if (selection == 0) 
+/*		if (selection == 0) 
 			arrow_offset = 0;
 
 		if (selection == 1)
@@ -130,9 +101,10 @@ int Stats_Draw() {
 			arrow_offset = 69;
 
 		C2D_DrawTriangle(45, 42.0f + arrow_offset, RED, 25, 32.0f + arrow_offset, RED, 25, 52.0f + arrow_offset, RED, 0.5f);
-		C3D_FrameEnd(0);
 		printf("\x1b[2;0H%i", selection);
-		printf("\x1b[3;0H%03i", arrow_offset);
+		printf("\x1b[3;0H%03i", arrow_offset);*/
+
+        C3D_FrameEnd(0);
 
 	}
 

@@ -41,13 +41,13 @@ int Main_Menu_Draw() {
 
 		hidScanInput();
 		u32 kDown = hidKeysDown();
-		u32 kHeld = hidKeysHeld();
+//		u32 kHeld = hidKeysHeld();
 
 		if (kDown & KEY_UP && MMSelection > 0) {
 			MMSelection--;
 		}
 
-		if (kDown & KEY_DOWN && MMSelection < ((sizeof(main_text) / sizeof(char*))-1)) { // Don't go over the qty of options
+		if (kDown & KEY_DOWN && MMSelection < 4) { // Don't go over the qty of options
 			MMSelection++;
 		}
 
@@ -59,10 +59,10 @@ int Main_Menu_Draw() {
 				Stats_Draw();
 
 			if (MMSelection == 2) 
-				DrawOptions();
+				Options_Draw();
 
 			if (MMSelection == 3)
-				printf("\x1b[6;0HLiterally just Glazed_Belmont :D");
+				printf("\x1b[6;0HDatagame Community! :blobaww:");
 
 			if (MMSelection == 4)
 				break;
@@ -74,7 +74,7 @@ int Main_Menu_Draw() {
 /*		if (kHeld & KEY_LEFT) arrow_offset--;
 
 		if (kHeld & KEY_RIGHT) arrow_offset++;*/
-			
+
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_SceneBegin(top);
 		C2D_TargetClear(top, WHITE);
@@ -87,13 +87,16 @@ int Main_Menu_Draw() {
 			arrow_offset = 0;
 
 		if (MMSelection == 1)
-			arrow_offset = 24;
+			arrow_offset = 23;
 
 		if (MMSelection == 2)
-			arrow_offset = 45;
+			arrow_offset = 46;
 
 		if (MMSelection == 3)
 			arrow_offset = 69;
+
+		if (MMSelection == 4)
+			arrow_offset = 92;
 
 		C2D_DrawTriangle(45, 42.0f + arrow_offset, RED, 25, 32.0f + arrow_offset, RED, 25, 52.0f + arrow_offset, RED, 0.5f);
 		C3D_FrameEnd(0);

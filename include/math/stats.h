@@ -18,11 +18,11 @@ typedef struct {
 }player;
 
 static const char stats_text[] =
-	"Name : \n" 
-	"Attack: \n"
-	"Defense: \n"
-	"Magic: \n"
-	"Speed: \n";
+	"Name : %s\n" 
+	"Attack: %i\n"
+	"Defense: %i\n"
+	"Magic: %i\n"
+	"Speed: %i\n";
 
 
 FILE *statfile;
@@ -32,13 +32,9 @@ FILE *statfile;
 
 
 
-int StatsRead();
+int Stats_Read();
 
 
-int StatsWrite();
-
-void Stats_TextInit();
-
-void Stats_TextExit();
+int Stats_Write();
 
 int Stats_Draw();

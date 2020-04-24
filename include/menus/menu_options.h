@@ -12,11 +12,11 @@ typedef struct {
 
 extern config_t config;
 
-int OptionsRead();
+int Options_Read();
 
-int OptionsWrite();
+int Options_Write();
 
 
-void DrawOptions();
+void Options_Draw();
 
 

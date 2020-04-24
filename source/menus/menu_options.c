@@ -25,7 +25,7 @@ const char *config_file =
 
 
 
-int OptionsRead() {
+int Options_Read() {
 
     printf("\x1b[7;0H                             ");
 
@@ -41,7 +41,7 @@ int OptionsRead() {
     return 0;
 }
 
-int OptionsWrite() {
+int Options_Write() {
 
     printf("\x1b[7;0H                             ");
     printf("\x1b[8;0H                             ");
@@ -56,7 +56,7 @@ int OptionsWrite() {
 }
 
 
-void DrawOptions() {
+void Options_Draw() {
 
     int test = 0;
     OptionsTextBuf  = C2D_TextBufNew(4096);
@@ -81,11 +81,11 @@ void DrawOptions() {
 
 
         if (kDown & KEY_A) {
-            OptionsRead();
+            Options_Read();
         }
 
         if (kDown & KEY_X) {
-            OptionsWrite();
+            Options_Write();
         }
 
 
