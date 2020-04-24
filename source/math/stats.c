@@ -37,7 +37,7 @@ int Stats_Read() {
     fclose(statfile);
     return 0;
 }
-
+ 
 int Stats_Write() {
 
     printf("\x1b[7;0H                             ");
