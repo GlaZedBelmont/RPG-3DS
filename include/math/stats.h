@@ -14,27 +14,31 @@ typedef struct {
 
 typedef struct {
     char Char_name[20];
+    int lvl;
+    int xp;
     stats stat;
 }player;
 
 static const char stats_text[] =
-	"Name : %s\n" 
+	"Name : %s\n"
+    "Level : %i\n"
+    "XP : %i\n" 
 	"Attack: %i\n"
 	"Defense: %i\n"
 	"Magic: %i\n"
 	"Speed: %i\n";
 
+extern player glazy;
 
-FILE *statfile;
 
 
 ////////////////
 
 
 
-int Stats_Read();
+/*int Stats_Read();
 
 
-int Stats_Write();
+int Stats_Write();*/
 
 int Stats_Draw();

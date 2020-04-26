@@ -16,6 +16,11 @@
 #include "menu_options.h"
 
 
+#include "savedata.h"
+
+#include "music.h"
+
+
 bool grounded = false, dead = false, pausegame = false, debug = true;
 float posY, posX, Vmomajust = 0, Vmomentum = 0, ajustpY = 0, ajustoY = 0, Hmomentum = 0, ajustpX = 0, ajustoX = 0, offsetX = 0, offsetY = 0;
 /*float acc[4] = {1, 0.6f, 0.4f, 0.3f};
@@ -25,12 +30,12 @@ int temphorz, tempvert, aapress = 0;
 
 bool LRpress = false;
 
-int a = 0;
-int i = 0;
+int a = 0; 
 bool init = false;
 
 
 float current_menu; // See menus.txt for info :P
+
 
 
 typedef struct {
@@ -257,8 +262,6 @@ int main(int argc, char **argv)
 	gfxSetDoubleBuffering(GFX_BOTTOM, false);
 	romfsInit();
 
-
-
     // Citro stuff
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
     C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
@@ -268,27 +271,20 @@ int main(int argc, char **argv)
     texload();
     Main_Menu_TextInit();
 
-    float size = 2.0f;
+/*    float size = 2.0f;
 
 
     int sizeX = 1;
-    int sizeY = 1;
+    int sizeY = 1;*/
 
  
-    //if (config.debug == true) consoleInit(GFX_BOTTOM, NULL);
 
 
     while (aptMainLoop())
     {
-    /*    hidScanInput();
-        
-        u32 kDown = hidKeysDown();
-        u32 kHeld = hidKeysHeld();
-        u32 kUp = hidKeysUp(); */
 
 
 
-        
         if (Main_Menu_Draw() == 0) break;
     
     
@@ -301,7 +297,8 @@ int main(int argc, char **argv)
     Textures_Free();
 	C2D_Fini();
 	C3D_Fini();
-	romfsExit();
+    stopAudio();
+	romfsExit(); 
 	gfxExit();
 	return 0;
 }

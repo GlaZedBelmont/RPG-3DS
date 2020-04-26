@@ -7,7 +7,7 @@ C2D_Text MainMenuText[1];
 
 static const char main_text[] =
 	"Play\n"
-	"Stats\n"
+	"Debug\n"
 	"Options\n"
 	"Credits\n"
 	"Quit\n";

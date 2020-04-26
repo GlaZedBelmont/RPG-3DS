@@ -14,8 +14,9 @@
 
 #include "menu_options.h"
 
-#include "stats.h"
+#include "menu_debug.h"	
 
+#include "music.h"
 
 #include "sfx.h"
 
@@ -23,16 +24,13 @@ static int MMSelection = 0;
 
 void Main_Menu_TextInit() {
 
-	MainMenuTextBuf  = C2D_TextBufNew(4096); // support up to 4096 glyphs in the buffer
-
+	MainMenuTextBuf  = C2D_TextBufNew(4096);
 	C2D_TextParse(&MainMenuText[0], MainMenuTextBuf, main_text);
-	// Optimize the static text strings
     C2D_TextOptimize(&MainMenuText[0]); 
 
 } 
 
 void Main_Menu_TextExit() {
-	// Delete the text buffers
 	C2D_TextBufDelete(MainMenuTextBuf);
 }
 
@@ -55,20 +53,17 @@ int Main_Menu_Draw() {
 		}
 
 		if (kDown & KEY_A) {
-			if (MMSelection == 0)
-				FadeOut(0, 0, 0, 1);
-
-				//if (config.debug == true) printf("\x1b[4;0HNot implemented yet, so fuck off!");
+			if (MMSelection == 0) {}
+				//initAudio();
 
 			if (MMSelection == 1) 
-				Stats_Draw();
+				Debug_Draw();
 
 			if (MMSelection == 2) 
 				Options_Draw();
 
-			if (MMSelection == 3)
-				//if (config.debug == true) printf("\x1b[6;0HDatagame Community! :blobaww:");
-
+			if (MMSelection == 3) {}
+				
 			if (MMSelection == 4)
 				break;
 			
@@ -105,11 +100,6 @@ int Main_Menu_Draw() {
 
 		C2D_DrawTriangle(45, 42.0f + arrow_offset, RED, 25, 32.0f + arrow_offset, RED, 25, 52.0f + arrow_offset, RED, 0.5f);
 		C3D_FrameEnd(0);
-
-/*		if (config.debug == true) {
-			printf("\x1b[2;0H%i", MMSelection);
-			printf("\x1b[3;0H%03i", arrow_offset);
-		}*/
 
 	}
 
