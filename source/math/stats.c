@@ -16,6 +16,8 @@
 
 #include "savedata.h"
 
+#include "keyboard.h"
+
 #define name 0
 #define level 1
 #define exp 2
@@ -24,11 +26,28 @@
 #define magic 5
 #define speed 6
 
+
+
+
+player players[4];
+
+C2D_TextBuf StatsTextBuf;
+C2D_Text StatsText;
+
 //static int selection = 0;
 
-player glazy = {"Glazy", 10, 320, {20, 10, 5, 53}};
+//player glazy = {"Glazy", 10, 320, {20, 10, 5, 53}};
 
 
+/*
+	{"Glazy", 10, 452, {20, 10, 5, 53}},
+	{"Eip", 30, 540, {45, 74, 12, 2}},
+	{"Win9x", 60, 210, {80, 20, 78, 20}},
+	{"Aerith", 10, 484, {10, 8, 87, 50}}
+	
+*/
+
+static int selection = 0;
 
 int Stats_Draw() {
 
@@ -38,7 +57,7 @@ int Stats_Draw() {
 
     Savedata_Read();
 
-	while(1) {
+	while(aptMainLoop()) {
 
 		hidScanInput();
 		u32 kDown = hidKeysDown();
@@ -49,6 +68,12 @@ int Stats_Draw() {
         char buf[160];
         
         if (kDown & KEY_B) break;
+
+
+		if (kDown & KEY_A) {
+			snprintf(players[selection].Char_name, 20, Keyboard_GetText("New Character", "Enter name"));
+			Savedata_Write();
+		}
 			
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_SceneBegin(top);
@@ -57,9 +82,18 @@ int Stats_Draw() {
 		C2D_DrawImageAt(battle_plains, 0, 0, 0.0f, NULL, 0.5f, 0.5f);
 		C2D_DrawRectSolid(20, 20, 0.5f, 360, 200, C2D_Color32(25, 63, 12, 200));
 
+		if ((kDown & KEY_L ||kDown & KEY_LEFT) && selection > 0)
+			selection--;
 
-        snprintf(buf, sizeof(buf), stats_text, glazy.Char_name, \
-        glazy.lvl, glazy.xp, glazy.stat.atk, glazy.stat.def, glazy.stat.mag, glazy.stat.spe);
+		if ((kDown & KEY_R ||kDown & KEY_RIGHT) && selection < 3)
+			selection++;
+
+
+/*        snprintf(buf, sizeof(buf), stats_text, glazy.Char_name, \
+        glazy.lvl, glazy.xp, glazy.stat.atk, glazy.stat.def, glazy.stat.mag, glazy.stat.spe);*/
+		snprintf(buf, sizeof(buf), stats_text, players[selection].Char_name, \
+        players[selection].lvl, players[selection].xp, players[selection].stats.atk, \
+		players[selection].stats.def, players[selection].stats.mag, players[selection].stats.spe);
         
         C2D_TextParse(&StatsText, StatsTextBuf, buf);
         C2D_TextOptimize(&StatsText);

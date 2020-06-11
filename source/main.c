@@ -19,24 +19,12 @@
 #include "savedata.h"
 
 #include "music.h"
-
-
-bool grounded = false, dead = false, pausegame = false, debug = true;
-float posY, posX, Vmomajust = 0, Vmomentum = 0, ajustpY = 0, ajustoY = 0, Hmomentum = 0, ajustpX = 0, ajustoX = 0, offsetX = 0, offsetY = 0;
-/*float acc[4] = {1, 0.6f, 0.4f, 0.3f};
-float dec[4] = {2, 2.8f, 2.4f, 3.75f};*/
-
-int temphorz, tempvert, aapress = 0;
-
-bool LRpress = false;
-
-int a = 0; 
 bool init = false;
 
 
 float current_menu; // See menus.txt for info :P
 
-
+int arrow_offset;
 
 typedef struct {
     float x;
@@ -44,12 +32,12 @@ typedef struct {
     u32 currentlyPressed; // not sure how the 3ds handles that but you could use this for buttons like abyx
 } inputs;
 
-void Ajustoffset(char* vartoajust, float offsetofvar){ // Scrolling
+/*void Ajustoffset(char* vartoajust, float offsetofvar){ // Scrolling
 	if (strcmp(vartoajust, "X") == 0) offsetX = offsetX + offsetofvar;
 	if (strcmp(vartoajust, "Y") == 0) offsetY = offsetY + offsetofvar;
 	if (strcmp(vartoajust, "pY") == 0) posY = posY + offsetofvar;
 	if (strcmp(vartoajust, "pX") == 0) posX = posX + offsetofvar;
-}
+}*/
 
 int keysmove(int select){
 	circlePosition pos;
@@ -261,6 +249,7 @@ int main(int argc, char **argv)
 	gfxSetDoubleBuffering(GFX_TOP, false);
 	gfxSetDoubleBuffering(GFX_BOTTOM, false);
 	romfsInit();
+    aptInit();
 
     // Citro stuff
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
@@ -270,6 +259,7 @@ int main(int argc, char **argv)
     bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
     texload();
     Main_Menu_TextInit();
+    
 
 /*    float size = 2.0f;
 
@@ -298,6 +288,7 @@ int main(int argc, char **argv)
 	C2D_Fini();
 	C3D_Fini();
     stopAudio();
+    aptExit();
 	romfsExit(); 
 	gfxExit();
 	return 0;

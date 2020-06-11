@@ -20,11 +20,18 @@
 
 #include "sfx.h"
 
+#include "loadlevel.h"
+
+C2D_TextBuf MainMenuTextBuf;
+C2D_Text MainMenuText[1];
+
 static int MMSelection = 0;
+
+//int arrow_offset;
 
 void Main_Menu_TextInit() {
 
-	MainMenuTextBuf  = C2D_TextBufNew(4096);
+	MainMenuTextBuf = C2D_TextBufNew(4096);
 	C2D_TextParse(&MainMenuText[0], MainMenuTextBuf, main_text);
     C2D_TextOptimize(&MainMenuText[0]); 
 
@@ -38,7 +45,9 @@ int Main_Menu_Draw() {
 
 	arrow_offset = 0;
 
-	while(1) {
+	
+
+	while(aptMainLoop()) {
 
 		hidScanInput();
 		u32 kDown = hidKeysDown();
@@ -53,8 +62,9 @@ int Main_Menu_Draw() {
 		}
 
 		if (kDown & KEY_A) {
-			if (MMSelection == 0) {}
-				//initAudio();
+			if (MMSelection == 0) {
+				loadOverworld();
+			}
 
 			if (MMSelection == 1) 
 				Debug_Draw();

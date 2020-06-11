@@ -15,7 +15,7 @@
 #include "stats.h"
 #include "menu_options.h"
 
-
+FILE *file;
 
 
 int Savedata_Read() {
@@ -28,7 +28,7 @@ int Savedata_Read() {
 
     fread(&config, sizeof(config_t), 1, file); // Get the options
     fseek(file, sizeof(config_t), SEEK_SET);
-    fread(&glazy, sizeof(player), 1, file); // Get the player's stats
+    fread(&players, sizeof(player), 1, file); // Get the players stats
     fclose(file);
     return 0;
 }
@@ -40,8 +40,7 @@ int Savedata_Write() {
     file = fopen("sdmc:/savedata.dat", "wb");
 
     fwrite(&config, sizeof(config_t), 1, file); // Write the options
-    fseek(file, sizeof(config_t), SEEK_SET);
-    fwrite(&glazy, sizeof(player), 1, file); // Write the player's stats
+    fwrite(&players, sizeof(players), 1, file); // Write the player's stats
     fclose(file);
     return 0;
 }

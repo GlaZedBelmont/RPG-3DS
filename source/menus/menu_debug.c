@@ -18,7 +18,18 @@
 
 #include "music.h"
 
+#include "maths.h"
+
+#include "sfx.h"
+
+#include "loadlevel.h"
+
+C2D_TextBuf DebugTextBuf;
+C2D_Text DebugText;
+
 static int selection = 0;
+
+//int arrow_offset;
 
 void Debug_Draw() {
 
@@ -27,8 +38,10 @@ void Debug_Draw() {
 
     Savedata_Read();
 
+    consoleInit(GFX_BOTTOM, NULL);
 
-    while(1) {
+
+    while(aptMainLoop()) {
         
         hidScanInput();
         u32 kDown = hidKeysDown();
@@ -59,11 +72,16 @@ void Debug_Draw() {
             }
                 // Music_Draw();
 
-            if (selection == 2) {}
+            if (selection == 2) {
+                int r = calcDamage(10, 94, 50, 11, 10);
+                printf("Damage: %i\n", r);
 
-            if (selection == 3) {}
+            //    GetRandomInt(0, 100); something like a way to edit the stats to test attack power and all that?
+            }
+
+            if (selection == 3) {
                 //Debug_Savedata_Draw();
-
+            }
             if (selection == 4)
                 break;
 		}

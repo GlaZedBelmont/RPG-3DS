@@ -16,6 +16,11 @@
 
 static int selection = 0;
 
+//int arrow_offset;
+
+C2D_TextBuf OptionsTextBuf;
+C2D_Text OptionsText;
+
 config_t config;
 
 const char saved_changes_prompt[] = 
@@ -40,7 +45,7 @@ void Options_Draw() {
     Savedata_Read();
 
 
-    while(1) {
+    while(aptMainLoop()) {
         
         hidScanInput();
         u32 kDown = hidKeysDown();
@@ -68,17 +73,17 @@ void Options_Draw() {
 
             if (selection == 2) {
                 Savedata_Write();
-                    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-                    C2D_SceneBegin(top);
-                    C2D_DrawRectSolid(20, 20, 0.5f, 360, 150, C2D_Color32(25, 63, 12, 250));
-                    C2D_TextBuf USWbuf  = C2D_TextBufNew(2048);
+                C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+                C2D_SceneBegin(top);
+                C2D_DrawRectSolid(20, 20, 0.5f, 360, 150, C2D_Color32(25, 63, 12, 250));
+                C2D_TextBuf USWbuf  = C2D_TextBufNew(2048);
 
-                    C2D_Text USW;
+                C2D_Text USW;
 
-                    C2D_TextParse(&USW, USWbuf, saved_changes_prompt);
-                    C2D_TextOptimize(&USW); 
-                    C2D_DrawText(&USW, 0, 80.0f, 30.0f, 0.5f, 0.75f, 0.75f);
-                    C3D_FrameEnd(0);
+                C2D_TextParse(&USW, USWbuf, saved_changes_prompt);
+                C2D_TextOptimize(&USW); 
+                C2D_DrawText(&USW, 0, 80.0f, 30.0f, 0.5f, 0.75f, 0.75f);
+                C3D_FrameEnd(0);
 
                 while(1) {
                     hidScanInput();
