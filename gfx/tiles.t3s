@@ -1,0 +1,4 @@
+--atlas -f rgba8888 -z auto
+
+tiles/grass64x64.png
+tiles/grass16x16.png
