@@ -1,190 +1,103 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+//#include <ctype.h>
 
-struct node{
+#define NONE 0
+
+struct node {
     int data;
     struct node *next;
 }*head[5];
 
-void create(int count, int maxElements)
+void printMap(int count, int* length, int x1, int x2, int y1, int y2)
 {
-//    int n2 = 6;
     struct node *temp;
-    for(int j = 0; j < maxElements; j++)
+    
+    for (int b = y1; b < (y2 > 0 ? y2 : count); b++)
     {
-        if (head[count] == NULL)
-        {
-            temp = (struct node*)malloc(sizeof(struct node));
-            temp->data = j + 5 + count;
-            temp->next = NULL;
-            head[count] = temp;
-        }
-        else
-        {
-            temp->next = (struct node*)malloc(sizeof(struct node));
+        temp = head[b];          
+        //for (int c = x1; c < length[b]; c++)
+        for (int a = 0; a < x1; ++a) {
             temp = temp->next;
-            temp->data = j + 5 + count;
-            temp->next = NULL;
         }
-    }
-}
-
-void print(int count, int* length)
-{
-    struct node *temp;
-    temp = head[count];
-    //for (int i = 0; i <)
-    for (int a = 0; a < count; a++)
-    {
-        printf("%d %d\n", a, length[a]);
-        for (int j = 0; j < length[j]; j++)
-        {
+        for (int c = 0; c < (x2 > 0 ? x2 : length[b]); c++) // use x2 if it has a value
+        { 
             printf("[%d]", temp->data);
-            temp = temp->next;
+            temp = temp->next;   
         }
-        printf("\n");
+        printf(" {%i}\n", length[b]);
     }
-/*    while (temp != NULL)
-    {
-        printf("[%d]", temp->data);
-        temp = temp->next;
-    }*/
 }
 
 int main(int argc, char* argv[])
 {
-    FILE *fp;
-    int tile, amount, x, y;
-    int count = 0;
-    int count2 = 0;
-    int linesCount = 0;
+    FILE *mapFile; // Has the map, will implement selective map obv, we can't only use test.map lol
+    int tile, amount; // Index of the tiles and how many times it's repeated
+    int count = 0; // Keeps track of which line we're reading and the total amount of lines after the arrays are created
+    int i = 0; // I have no real idea what we're using it for tbh, it counts how many [] we have
+    int x1 = 0;
+    int x2 = 0;
+    int y1 = 0;
+    int y2 = 0;
+ 
+    char line[256]; // store the line
+    char *token; // So we can split line in pieces
+    
+    int *lenMap = malloc(sizeof(int)); // Keeps track of the total amount per line but we can call it later
+    
+    struct node *map; // Store the map
 
-    char ch;
-    char line[256];
-    char *token;
 
+    mapFile = fopen("test.map", "rb");
+    printf("Testing map parsing: \n");
 
-    fp = fopen("test.map", "rb");
-    printf("Testing map parsing: \n\n");
-
-    while ((ch = fgetc(fp)) != EOF) {
-        if (ch == '\n')
-            linesCount++;
-    }
-    printf("linesCount: %i\n", linesCount);
-
-    int *map[linesCount];
-
-    int *lenMap = malloc(sizeof(int));
-
-    rewind(fp);
-
-    int i = 0;
-    while (fgets(line, sizeof(line), fp)) {
-        //printf("Parsing %s", line);
-        head[i] = NULL;
-        struct node *temp;
-
+    while (fgets(line, sizeof(line), mapFile))
+    {
         token = strtok(line, "[]\n");
-        printf("%i.", count);
         while (token != NULL) { // Each time this breaks, next line is parsed
-            if (strcmp(token, " ") != 0) {
-                sscanf(token, "%dx%d", &tile, &amount); 
-                //printf("[Line #%ix%i]. [%dx%d]\n", count, count2, tile, amount);
-
-                //map[i] = (int *)malloc(amount * sizeof(int));
-                
-                count2 += amount;
-                
-                for (int a = 0; a < linesCount; a++)
+            if (strcmp(token, " ") != 0)
+            {
+                head[i] = NULL;
+                sscanf(token, "%dx%d", &tile, &amount);
+                lenMap[count] += amount;
+                    
+                for (int j = 0; j < amount; j++)
                 {
-                    
-                    for (int j = 0; j < amount; j++)
-                    {
-                        //printf("[%d]", tile);
-                        
-                        
-                        if (head[a] == NULL) {
-                            
-                            temp = (struct node*)malloc(sizeof(struct node));
-                            temp->data = tile;
-                            temp->next = NULL;
-                            head[a] = temp;
-                        }
-                        else {
-                            
-                            temp->next = (struct node*)malloc(sizeof(struct node));
-                            temp = temp->next;
-                            temp->data = tile;
-                            temp->next = NULL;
-                        }
+                    if (head[count] == NULL)
+                    {      
+                        map = (struct node*)malloc(sizeof(struct node));
+                        map->data = tile;
+                        map->next = NULL;
+                        head[count] = map;
                     }
-                    
-                    //map[i][j] = tile;
-                    //printf("[%d]", map[i][j]);
-                    
-                   
-                }
-                
+                    else
+                    {   
+                        map->next = (struct node*)malloc(sizeof(struct node));
+                        map = map->next;
+                        map->data = tile;
+                        map->next = NULL;
+                    }
+                }   
             }
-            
             i++;
-            printf(" || ");  
             token = strtok(NULL, "[]\n");
         }
-        lenMap[count] = count2;
-        count2 = 0;
-        printf("\n");
-        
         count++;
     }
-    printf("\nI see %i blocks\n", i);
-    fclose(fp);
-    printf("\n");
+    printf("\nI see %i blocks in %i columns\n\n", i, count);
+    fclose(mapFile);
 
-
-    for (int h = 0; h < count; h++) {
-        printf("%d\n", lenMap[h]);
-    }
-    
-/*    for (int h = 0; h < count; h++) {
-        printf("%i.", lenMap[h]);
-        for (int j = 0; j < lenMap[h]; j++) {
-            printf("[%d]", map[h][j]); 
-        }
-        printf("\n");
-    }*/
-    
-   for (int i = 0; i < linesCount; i++)
+    for (int h = 0; h < count; h++)
     {
-/*        head[i] = NULL;
-        struct node *temp;
-        for (int j = 0; j < lenMap[i]; j++)
-        {
-            if (head[i] == NULL)
-            {
-                temp = (struct node*)malloc(sizeof(struct node));
-                temp->data =  j;
-                temp->next = NULL;
-                head[i] = temp;
-            }
-            else
-            {
-                temp->next = (struct node*)malloc(sizeof(struct node));
-                temp = temp->next;
-                temp->data = j;
-                temp->next = NULL;
-            }
-        }*/
-        //create(i, 5);
-        print(i, lenMap);
-        printf("\n\n");
-    }  
-
+        printf("%d => %d\ttiles\n", h, lenMap[h]);
+    }
+    printMap(count, lenMap, x1, x2, y1, y2);
+    
+    free(lenMap);
     return 0;
 }
+
 
 /* Example of the data structure
     0:  [][]
